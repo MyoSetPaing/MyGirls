@@ -6,50 +6,57 @@ void main() {
   ));
 }
 
-class MyApp extends StatelessWidget {
-  List<String> imgList = [
-    "img/linlae.jpg",
-    "img/phonethiri.jpg",
-    "img/sansan.png",
-    "img/theingi.jpg",
-    "img/thinzar.jpg"
-  ];
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
 
-  List<Girls> girls = [
-    Girls("Thin Zar Lin Lae", "img/linlae.jpg"),
-    Girls("Phone Thiri Kyaw", "img/phonethiri.jpg"),
-    Girls("San San", "img/sansan.png"),
-    Girls("Theingi Mg Mg", "img/theingi.jpg"),
-    Girls("Thin Zar", "img/thinzar.jpg")
-  ];
+class _MyAppState extends State<MyApp> {
+  List<String> names = ["Theingi Mg Mg"];
 
-  var pageController = PageController(viewportFraction: 0.8);
+  var nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Image Lesson"),
-        ),
-        body: PageView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return Column(
-              children: <Widget>[
-                Image.asset(girls[index].img,height: 500,),
-                Text(girls[index].name)
-              ],
-            );
-          },
-          itemCount: girls.length,
-          scrollDirection: Axis.horizontal,
-          controller: pageController,
-        ));
+      appBar: AppBar(
+        title: Text("List Exercise"),
+      ),
+      body: Column(
+        children: <Widget>[
+          TextField(
+            controller: nameController,
+            decoration: InputDecoration(hintText: "Enter name"),
+          ),
+          RaisedButton(
+            onPressed: () {
+              String name = nameController.text;
+
+              setState(() {
+                names.add(name);
+              });
+            },
+            child: Text("Add"),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  child: Container(
+                    child: Text(
+                      names[index],
+                      textAlign: TextAlign.center,
+                    ),
+                    padding: EdgeInsets.all(10.0),
+                    color: Colors.pink,
+                  ),
+                );
+              },
+              itemCount: names.length,
+            ),
+          )
+        ],
+      ),
+    );
   }
-}
-
-class Girls {
-  String name;
-  String img;
-
-  Girls(this.name, this.img);
 }
