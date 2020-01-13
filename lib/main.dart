@@ -23,24 +23,26 @@ class MyApp extends StatelessWidget {
     Girls("Thin Zar", "img/thinzar.jpg")
   ];
 
+  var pageController = PageController(viewportFraction: 0.8);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: Text("Image Lesson"),
         ),
-        body: ListView.builder(
+        body: PageView.builder(
           itemBuilder: (BuildContext context, int index) {
-            return Card(
-              child: Column(
-                children: <Widget>[
-                  Image.asset(girls[index].img),
-                  Text(girls[index].name)
-                ],
-              ),
+            return Column(
+              children: <Widget>[
+                Image.asset(girls[index].img,height: 500,),
+                Text(girls[index].name)
+              ],
             );
           },
           itemCount: girls.length,
+          scrollDirection: Axis.horizontal,
+          controller: pageController,
         ));
   }
 }
